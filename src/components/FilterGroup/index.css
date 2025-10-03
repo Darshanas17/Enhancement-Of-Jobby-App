@@ -1,16 +1,58 @@
+/* Container for the entire filter group */
 .filter-cont {
   color: #ffffff;
+  padding: 16px;
+  background-color: #1e1e1e; /* optional: dark background for sidebar */
+  border-radius: 8px;
 }
+
+/* Remove default list styling for all filter lists */
 .categories-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
+
+/* Heading for each category (Employment Type, Locations, Salary Range) */
 .category-heading {
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  display: block;
 }
+
+/* Each checkbox/radio label styling */
 .checkbox-label {
-  font-size: 12px;
+  font-size: 14px;
   padding-left: 10px;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  user-select: none;
+}
+
+/* Each list item (checkbox or radio) spacing */
+.list-item {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Checkbox and radio input styling */
+.list-item input[type='checkbox'],
+.list-item input[type='radio'] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Optional: hover effect on labels */
+.list-item:hover .checkbox-label {
+  color: #ffd700; /* gold color on hover */
+}
+
+/* Divider line between filter sections */
+.hr-line {
+  border: 0.5px solid #444;
+  margin: 16px 0;
 }

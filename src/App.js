@@ -48,6 +48,14 @@ const salaryRangesList = [
   },
 ]
 
+const locationsList = [
+  {id: 'HYD', label: 'Hyderabad'},
+  {id: 'BLR', label: 'Bangalore'},
+  {id: 'CHE', label: 'Chennai'},
+  {id: 'DEL', label: 'Delhi'},
+  {id: 'MUM', label: 'Mumbai'},
+]
+
 // Replace your code here
 const App = () => (
   <Switch>
@@ -60,6 +68,7 @@ const App = () => (
         <Jobs
           employmentTypesList={employmentTypesList}
           salaryRangesList={salaryRangesList}
+          locationsList={locationsList}
         />
       )}
     />

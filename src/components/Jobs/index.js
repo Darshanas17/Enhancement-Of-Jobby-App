@@ -21,6 +21,7 @@ class Jobs extends Component {
   state = {
     selectedEmploymentType: [],
     selectedSalaryRanges: '',
+    selectedLocations: [],
     searchInput: '',
     jobDetailsList: [],
     jobsApiStatus: apiStatusConstants.initial,
@@ -43,14 +44,27 @@ class Jobs extends Component {
     this.setState({selectedSalaryRanges: id}, this.getJobDetails)
   }
 
+  getLocationId = id => {
+    const {selectedLocations} = this.state
+    const updatedList = selectedLocations.includes(id)
+      ? selectedLocations.filter(each => each !== id)
+      : [...selectedLocations, id]
+
+    this.setState({selectedLocations: updatedList}, this.getJobDetails)
+  }
+
   getJobDetails = async () => {
     this.setState({jobsApiStatus: apiStatusConstants.inProgress})
     const {
       selectedEmploymentType,
       selectedSalaryRanges,
+      selectedLocations,
       searchInput,
     } = this.state
+
     const joinedEmploymentType = selectedEmploymentType.join(',')
+    const joinedLocations = selectedLocations.join(',')
+
     const jwtToken = Cookies.get('jwt_token')
 
     const jobsApiUrl = `https://apis.ccbp.in/jobs?employment_type=${joinedEmploymentType}&minimum_package=${selectedSalaryRanges}&search=${searchInput}`
@@ -129,10 +143,19 @@ class Jobs extends Component {
   )
 
   renderJobsList = () => {
-    const {jobDetailsList} = this.state
-    return jobDetailsList.length > 0 ? (
+    const {jobDetailsList, selectedLocations} = this.state
+
+    const filteredJobs = selectedLocations.length
+      ? jobDetailsList.filter(job =>
+          selectedLocations.some(
+            location => location.toLowerCase() === job.location.toLowerCase(),
+          ),
+        )
+      : jobDetailsList
+
+    return filteredJobs.length > 0 ? (
       <ul className="jobs-list-cont">
-        {jobDetailsList.map(job => (
+        {filteredJobs.map(job => (
           <JobCard key={job.id} eachJob={job} />
         ))}
       </ul>
@@ -163,10 +186,11 @@ class Jobs extends Component {
   )
 
   render() {
-    const {salaryRangesList, employmentTypesList} = this.props
+    const {salaryRangesList, employmentTypesList, locationsList} = this.props
     const {
       selectedSalaryRanges,
       selectedEmploymentType,
+      selectedLocations,
       searchInput,
     } = this.state
 
@@ -180,10 +204,13 @@ class Jobs extends Component {
             <FilterGroup
               salaryRangesList={salaryRangesList}
               employmentTypesList={employmentTypesList}
+              locationsList={locationsList}
               getSalaryRangeId={this.getSalaryRangeId}
               getEmploymentTypeId={this.getEmploymentTypeId}
+              getLocationId={this.getLocationId}
               selectedSalaryRanges={selectedSalaryRanges}
               selectedEmploymentType={selectedEmploymentType}
+              selectedLocations={selectedLocations}
             />
           </div>
           <div className="job-content-cont">

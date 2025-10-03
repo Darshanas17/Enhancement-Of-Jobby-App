@@ -1,0 +1,16 @@
+.filter-cont {
+  color: #ffffff;
+}
+.categories-list {
+  list-style: none;
+  padding: 0;
+}
+.category-heading {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.checkbox-label {
+  font-size: 12px;
+  padding-left: 10px;
+}
